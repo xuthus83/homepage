@@ -739,7 +739,7 @@ function kd1() {
 	//如果是移动端，就使用自适应大小弹窗
 	if ( navigator.userAgent.match(/(Android|iPhone|SymbianOS|Windows Phone|iPad|iPod)/i)) {
 		width = 'auto';
-		height = 'auto';
+		height = '500';
 	}
 	if (title==null) {
 		title = false;
@@ -758,7 +758,7 @@ function kd1() {
 		area: [width + 'px', height + 'px'],
 		fix: false,
 		//不固定
-		maxmin: true,
+		maxmin: false,
 		shade: 0.3,
 		content: url,
 		btn: ['关闭'],
