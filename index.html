@@ -641,8 +641,7 @@ document.write("<body background='wap/bg"+bg+".webp'>")
 <p class="url"></p>
 </div>
 
-<div class="box" onClick="kd1()" >
-<!-- <a href="http://www.xuthus83.cn/api/kd?expCode=YD&expNo=3832995999947 "  target="leftframe"></a> -->
+<div class="box" onClick="kd1()" >  
 <p><img class="icon" src="img/express_100.png"></p>
 <p class="url"></p>
 </div>
@@ -724,7 +723,6 @@ function clear_seach() {
 function kd1() {
 	var kw = document.getElementById('search_input').value;
 	var url='https://m.kuaidi100.com/app/query/?com=*&nu='+kw+'&coname=xuthus';
-	  
 	var width;
 	var height;
 	//如果是移动端，就使用自适应大小弹窗
@@ -747,12 +745,11 @@ function kd1() {
 	layer.open({
 		type: 2,
 		area: [width + 'px', height + 'px'],
-		fix: false,
+		fix: true,
 		//不固定
 		maxmin: true,
 		shade: 0.3,
 		content: url,
-		btn: ['关闭'],
 		zIndex: 19891014,
 		// 弹层外区域关闭
 		shadeClose: true,
@@ -760,10 +757,6 @@ function kd1() {
 			return true;
 		}
 	});
-}
-function fade(){
-	bigbox.style.display = "none";
-	bigbox1.style.display = "none";
 }
 	
 function search(){if(document.getElementById("search_input").value != ""){window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(document.getElementById("search_input").value) + "&from=smor&safe=1&snum=1";
