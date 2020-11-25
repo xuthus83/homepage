@@ -4,8 +4,10 @@
 <meta content="en-us" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="js/layer.css" type="text/css">
 <title id="title"></title>
 <script src="js/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/layer.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.zclip.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
@@ -389,29 +391,45 @@ line-height: 1em;
 font-size: 0.75em;
 }
 
-
-#bigbox{
-	display: none;
-    z-index: 101;
-    width: 95%;
-    border-radius :10px;
-    height: 70%;
-    position:fixed;
-    top:0;
-    right:0;
-    left:0;
-    bottom:0;
-    margin:auto;
+@media only screen and (min-width: 320px) {
+	#bigbox{
+		display: none;
+		z-index: 101;
+		width: 20%;
+		border-radius :10px;
+		height: 70%;
+		position:fixed;
+		top:0;
+		right:0;
+		left:0;
+		bottom:0;
+		margin:auto;
+	}
+	#bigbox1{
+		display: none;
+		width:100%;
+		height:100%;
+		background:rgba(0, 0, 0, 0.5);
+		position: fixed;
+		left: 0;
+		top: 0;
+		z-index: 100;
+	}
 }
-#bigbox1{
-	display: none;
-    width:100%;
-    height:100%;
-    background:rgba(0, 0, 0, 0.5);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
+@media only screen and (max-width: 320px){
+	#bigbox{
+		display: none;
+		z-index: 101;
+		width: 95%;
+		border-radius :10px;
+		height: 70%;
+		position:fixed;
+		top:0;
+		right:0;
+		left:0;
+		bottom:0;
+		margin:auto;
+	}
 }
 
 /*下方为动画样式，不懂的不要修改*/
@@ -642,6 +660,10 @@ document.write("<body background='wap/bg"+bg+".webp'>")
 <script type="text/javascript">
 $(function(){
 	
+	layui.use(['layer'], function () {
+		layer = layui.layer;
+
+	})
 	$.ajax({
 		type:"get",
 		url:"https://api.lwl12.com/hitokoto/v1?encode=realjson",
@@ -702,19 +724,55 @@ function clear_seach() {
 	document.getElementById('clear').style.display = 'none';
 	close_sug();
 	input.focus();
-}
+}       
+      
 function kd1() {
 	var kw = document.getElementById('search_input').value;
 	var url='https://m.kuaidi100.com/app/query/?com=*&nu='+kw+'&coname=xuthus';
 	// if(kw!=""){
 	// if(kw!=""){
-	bigbox.style.display = "block";
-	bigbox1.style.display = "block";
-	document.getElementById("bigbox").innerHTML = '<object type="text/html" data='+url+' width="100%" height="100%"></object>';
-	$(".div").load(location.href+" .div");
-	// }else{
-	// 	alert("请先输入物流单号!");
-	// }
+	// bigbox.style.display = "block";
+	// bigbox1.style.display = "block";  
+	  
+	var width;
+	var height;
+	//如果是移动端，就使用自适应大小弹窗
+	if ( navigator.userAgent.match(/(Android|iPhone|SymbianOS|Windows Phone|iPad|iPod)/i)) {
+		width = 'auto';
+		height = 'auto';
+	}
+	if (title==null) {
+		title = false;
+	}
+	if (url==null) {
+		url = "/404.html";
+	}
+	if (width==null) {
+		width = 800;
+	}
+	if (height==null) {
+		height = ($(window).height() - 50);
+	}
+	layer.open({
+		type: 2,
+		area: [width + 'px', height + 'px'],
+		fix: true,
+		//不固定
+		maxmin: false,
+		shade: 0.3,
+		content: url,
+		btn: ['关闭'],
+		// 弹层外区域关闭
+		shadeClose: true,
+		cancel: function(index) {
+			return true;
+		}
+	});
+	// document.getElementById("bigbox").innerHTML = '<object type="text/html" data='+url+' width="100%" height="100%"></object>';
+	// $(".div").load(location.href+" .div");
+	// // }else{
+	// // 	alert("请先输入物流单号!");
+	// // }
 }
 function fade(){
 	bigbox.style.display = "none";
