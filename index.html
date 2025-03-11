@@ -535,6 +535,14 @@ font-size: 0.75em;
 		transform: translateY(0)
 	}
 }
+.footer{
+    position: fixed;
+    bottom:0;
+}
+a {
+  text-decoration:none; /* 去掉下划线 */
+  color:rgba(0, 0, 0, 0.5); /* 继承父元素的颜色 */
+}
 </style>
 
 <body>
@@ -581,7 +589,7 @@ document.write("<body background='wap/bg"+bg+".webp'>")
 </div>
 <br />
 
-<div class="box">
+<!-- <div class="box">
 <a href="https://www.google.com"></a>
 <p><img class="icon" src="img/gapps.png" id="logo"></p>
 <p class="url"></p>
@@ -600,72 +608,98 @@ document.write("<body background='wap/bg"+bg+".webp'>")
 </div>
 
 <div class="box">
-<a href="https://www.facebook.com"></a>
-<p><img class="icon" src="img/facebook.png" ></p>
-<p class="url"></p>
-</div>
-
-<div class="box">
 <a href="https://twitter.com"></a>
 <p><img class="icon" src="img/twitter.png" ></p>
 <p class="url"></p>
-</div>
+</div> -->
 
 <div class="box">
-<a href="https://www.youtube.com"></a>
-<p><img class="icon" src="img/google_youtube.png" ></p>
-<p class="url"></p>
-</div>
-
-<div class="box">
-<a href="https://mail.google.com/mail/#inbox"></a>
-<p><img class="icon" src="img/google_gmail.png" ></p>
+<a href="http://k2.xuthus83.cn:3000" target="_blank"></a>
+<p><img class="icon" src="img/nas-tools.png" ></p>
 <p class="url"></p>
 </div>
 
 <div class="box">
-<a href="https://translate.google.cn"></a>
-<p><img class="icon" src="img/google_translate.png" ></p>
+<a href="http://k2.xuthus83.cn:8096" target="_blank"></a>
+<p><img class="icon" src="img/emby-logo.png" ></p>
 <p class="url"></p>
 </div>
 
 <div class="box">
-<a href="https://www.bilibili.com/"></a>
-<p><img class="icon" src="img/bilibili.png" ></p>
+<a href="http://k2.xuthus83.cn:8084" target="_blank"></a>
+<p><img class="icon" src="img/filebrowser.png" ></p>
 <p class="url"></p>
 </div>
 
 <div class="box">
-<a href="https://pan.baidu.com/"></a>
-<p><img class="icon" src="img/baidu_pan.png" ></p>
+<a href="http://k2.xuthus83.cn:5000" target="_blank"></a>
+<p><img class="icon" src="img/Unraid.net.png" ></p><p class="url"></p>
+</div>
+
+<!-- <div class="box">
+<a href="https://k2.xuthus83.cn:81/aria2" target="_blank"></a>
+<p><img class="icon" src="img/AriaNg.ico" ></p>
+<p class="url"></p>
+</div> -->
+
+<!-- <div class="box">
+<a href="http://k2.xuthus83.cn:6880/" target="_blank"></a>
+<p><img class="icon" src="img/qbittorrent-tray.svg" ></p>
+<p class="url"></p>
+</div> -->
+
+<div class="box"  >  
+<a href="http://k2.xuthus83.cn:8123" target="_blank"></a>
+<p><img class="icon" src="img/home-assistant.png" style="border-radius: 30px;"></p>
 <p class="url"></p>
 </div>
 
-<div class="box" onClick="kd1()" >  
-<p><img class="icon" src="img/express_100.png"></p>
+<!--<div class="box">-->
+<!--<a href="http://k2.xuthus83.cn:2345/" target="_blank"></a>-->
+<!--<p><img class="icon" src="img/pigallery2.png"  style=""></p>-->
+<!--<p class="url"></p>-->
+<!--</div>-->
+
+<div class="box">
+<a href="http://k2.xuthus83.cn:2342/" target="_blank"></a>
+<p><img class="icon" src="img/PhotoPrism-icon.png"  style=""></p>
 <p class="url"></p>
 </div>
-
 
 <div class="title">
 </h1>忘语</h1>
 </div>
 <div class="label">
-<span id="lwlhitokoto">
+<p id="hitokoto">
+  <span id="hitokoto_text"></span>
+</p>
 </div>
 <div id="bigbox"></div>
 <div id="bigbox1" onclick="fade()"></div>
 </br>
+<div id="footer">
+    <a id="beian" href='http://beian.miit.gov.cn/' target="_blank">	
+赣ICP备19007419号-1</a>
+</div>
 <script type="text/javascript">
 $(function(){
-	$.ajax({
-		type:"get",
-		url:"https://api.lwl12.com/hitokoto/v1?encode=realjson",
-		dataType:"json",
-		success:function(data){
-		$('#lwlhitokoto').text(data.text);
-		}
-	})
+    $.ajax({
+      type: 'GET',
+      url: 'https://v1.hitokoto.cn',
+      dataType: 'jsonp',
+      jsonp: 'callback',
+      jsonpCallback: 'hitokoto',
+      success (data) {
+          data=JSON.parse(data);
+        // console.log(JSON.parse(data))
+        // $('#hitokoto_text').attr('href', `https://hitokoto.cn/?uuid=${data.uuid}`)
+        $('#hitokoto_text').text(data.hitokoto)
+      },
+      error (jqXHR, textStatus, errorThrown) {
+        // 错误信息处理
+        console.error(textStatus, errorThrown)
+    }
+})
 
 })
 
@@ -718,47 +752,7 @@ function clear_seach() {
 	document.getElementById('clear').style.display = 'none';
 	close_sug();
 	input.focus();
-}       
-      
-function kd1() {
-	var kw = document.getElementById('search_input').value;
-	var url='https://m.kuaidi100.com/app/query/?com=*&nu='+kw+'&coname=xuthus';
-	var width;
-	var height;
-	//如果是移动端，就使用自适应大小弹窗
-	if ( navigator.userAgent.match(/(Android|iPhone|SymbianOS|Windows Phone|iPad|iPod)/i)) {
-		width = 'auto';
-		height = '500';
-	}
-	if (title==null) {
-		title = false;
-	}
-	if (url==null) {
-		url = "/404.html";
-	}
-	if (width==null) {
-		width = 800;
-	}
-	if (height==null) {
-		height = ($(window).height() - 50);
-	}
-	layer.open({
-		type: 2,
-		area: [width + 'px', height + 'px'],
-		fix: true,
-		//不固定
-		maxmin: true,
-		shade: 0.3,
-		content: url,
-		zIndex: 19891014,
-		// 弹层外区域关闭
-		shadeClose: true,
-		cancel: function(index) {
-			return true;
-		}
-	});
-}
-	
+}    
 function search(){if(document.getElementById("search_input").value != ""){window.location.href = "https://www.bing.com/search?q=" + encodeURIComponent(document.getElementById("search_input").value) + "&from=smor&safe=1&snum=1";
 document.getElementById("search_input").value = "";}return false;}
 document.getElementById('suglist').addEventListener('click', function(e) {
